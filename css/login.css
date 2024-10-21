@@ -1,0 +1,24 @@
+.diverror
+{
+    background-color: transparent;
+    color:red;
+    height:45px;
+    width:85%;
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    /* transition: all 1s; */
+    letter-spacing: 1px;
+}
+.topmarginlarge{
+    margin-top: 80px;
+}
+.applyerrordiv
+{
+    visibility: visible;
+    opacity: 1;
+    /* animation:falldown 1s linear; */
+}
