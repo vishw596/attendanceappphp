@@ -26,6 +26,14 @@
                 <label for="pass" class="form-label">Password</label>
                 <input type="password" class="form-control" id="pass" name="password" required>
             </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" name= "role" class="bg-whit text-black rounded border" style="height: 50px; width: 150px;" required>
+                    <option disabled>Select A Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="faculty">Faculty</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Login</button>
             <div class="diverror topmarginlarge" id="diverror">
                 <label class="errormessage" id="errormessage"></label>

@@ -1,4 +1,13 @@
 <?php
+session_start();
+if (isset($_SESSION['current_admin'])) {
+} else {
+    header("location:" . "/attendancesys/index.php");
+    die();
+}
+
+?>
+<?php
 $path = $_SERVER['DOCUMENT_ROOT'];
 require_once $path . "/attendancesys/database/db.php";
 
@@ -6,21 +15,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     if(isset($_POST['action']))
     {
-        if($_POST['action'] == 'getStudentData')
+        if($_POST['action'] == 'getFacultyData')
         {
             $res = [];
-            $output = '<table class="table table-hover table-bordered table-striped">
+            $output = "<table class='table table-hover table-bordered table-striped'>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Roll No.</th>
-                        <th>Name</th>
-                        <th>Action</th>
+                        <th width='10%'>Id</th>
+                        <th width='10%'>Username</th>
+                        <th width='20%'>Name</th>
+                        <th width='20%'>Password</th>
+                        <th width='20%'>Action</th>
                     </tr>
                 </thead>
-            ';
+            ";
             $dbo = new Database();
-            $query = $dbo->conn->prepare("select * from student_details");
+            $query = $dbo->conn->prepare("select * from faculty_details");
             try{
                 $query->execute();
                 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -28,26 +38,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             }
             catch(Exception $e)
             {}
-            echo "<a href='./handlers/add_st.php'><button id = ''class = 'btn btn-success my-3'>Add Student</button></a>";
+            echo "<a href='./handlers/faculty/add_fac.php' target = '_blank'><button id = ''class = 'btn btn-success my-3'>Add Faculty</button></a>";
             if(count($res) < 1)
             {
-                $output .= "<tr><td colspan = '3'>NO DATA</td></tr></table>";
+                $output .= "<tr><td colspan = '5'>NO DATA</td></tr></table>";
             }
             else
             {
                 foreach($res as $st)
                 {
                     $output .= "<tr> <td>".$st['id']."</td>
-                                <td>".$st['roll_no']."</td>
+                                <td>".$st['user_name']."</td>
                                 <td>".$st['name']."</td>
+                                <td>".$st['password']."</td>
                                 <td>
                                 <div class = 'col-sm-12'>
                                 <div class = 'row'>
                                     <div class='col-md-6'>
-                                    <button id = '".$st['id']."' class = 'btn btn-success'>Edit</button>
+                                    <a href='./handlers/faculty/edit_fac.php?id=".$st['id']."' target ='_blank'><button id = '".$st['id']."' class = 'btn btn-success col-md-12'>Edit</button></a>
                                     </div>
                                     <div class='col-md-6'>
-                                    <button id = '".$st['id']."' class = 'btn btn-danger'>Delete</button>
+                                    <button id = '".$st['id']."' class = 'delete btn btn-danger col-md-12'>Delete</button>
                                     </div>
                                 </div>
                                 </div>
